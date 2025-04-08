@@ -183,7 +183,8 @@ public class FLCartesianPlane: UIView, FLStylable {
       if yAxisPosition == .left {
         labelXPosition = chartLeft - config.tick.lineLength - tickLabelSpacing - label.size.width
       } else {
-        labelXPosition = chartRight + config.tick.lineLength + tickLabelSpacing
+        //labelXPosition = chartRight + config.tick.lineLength + tickLabelSpacing
+          labelXPosition = chartLeft - config.tick.lineLength - tickLabelSpacing - label.size.width
       }
       
       label.point = CGPoint(x: labelXPosition, y: label.point.y - (label.size.height.half))
@@ -286,9 +287,12 @@ public class FLCartesianPlane: UIView, FLStylable {
                                      chartBottomLeft,
                                      chartBottomRight])
       case .right:
-        axesLines.addLines(between: [chartTopRight,
-                                     chartBottomRight,
-                                     chartBottomLeft])
+//        axesLines.addLines(between: [chartTopRight,
+//                                     chartBottomRight,
+//                                     chartBottomLeft])
+          axesLines.addLines(between: [chartTopLeft,
+                                       chartBottomLeft,
+                                       chartBottomRight])
       case .none:
         axesLines.addLines(between: [chartBottomLeft,
                                      chartBottomRight])
@@ -349,8 +353,9 @@ public class FLCartesianPlane: UIView, FLStylable {
       let (text, size) = textSizeFrom(value: (dataMaxValue ?? chartDataMaxValue), maxYLabelWidth: &maxYLabelWidth)
       labels.add(Label(text: text, size: size, point: CGPoint(x: 0, y: chartTop), type: .topYLabel))
     }
-    
-    config.setMargin(for: yAxisPosition, horizontalMargin: maxYLabelWidth + config.tick.lineLength + tickLabelSpacing)
+    // switch to left side
+      //config.setMargin(for: .yAxisPosition, horizontalMargin: maxYLabelWidth + config.tick.lineLength + tickLabelSpacing)
+      config.setMargin(for: .left, horizontalMargin: maxYLabelWidth + config.tick.lineLength + tickLabelSpacing)
   }
   
   private func drawNoDataLabel() {
@@ -364,29 +369,31 @@ public class FLCartesianPlane: UIView, FLStylable {
     if showAverageLine {
       let averageLineY = yPosition(forValue: chartData.average)
       
-      let spacingFromLine: CGFloat = 2
+      let spacingFromLine: CGFloat = 10
       
-      let averageLabel = UILabel()
-      averageLabel.text = chartData.formattedAverage
-      averageLabel.font = config.averageView.primaryFont
-      averageLabel.textColor = config.averageView.primaryColor
-      let averageLabelSize = averageLabel.intrinsicContentSize
-      averageLabel.frame = CGRect(x: xPositionForAverageLabel(averageLabel),
-                                  y: averageLineY - averageLabelSize.height - spacingFromLine,
-                                  width: averageLabelSize.width,
-                                  height: averageLabelSize.height)
-      addSubview(averageLabel)
+      
       
       let unitOfMeasureLabel = UILabel()
-      unitOfMeasureLabel.text = "\(Translation.averageAbbreviated) \(chartData.yAxisUnitOfMeasure)"
+        unitOfMeasureLabel.text = "\(Translation.averageAbbreviated) \(chartData.yAxisUnitOfMeasure)"
       unitOfMeasureLabel.font = config.averageView.secondaryFont
       unitOfMeasureLabel.textColor = config.averageView.secondaryColor
       let unitOfMeasureLabelSize = unitOfMeasureLabel.intrinsicContentSize
-      unitOfMeasureLabel.frame = CGRect(x: xPositionForAverageLabel(unitOfMeasureLabel),
-                                        y: averageLineY + spacingFromLine + config.averageView.lineWidth,
-                                        width: unitOfMeasureLabelSize.width,
-                                        height: unitOfMeasureLabelSize.height)
+        unitOfMeasureLabel.frame = CGRect(x: xPositionForAverageLabel(unitOfMeasureLabel),
+                                          y: averageLineY - unitOfMeasureLabelSize.height - spacingFromLine,
+                                          width: unitOfMeasureLabelSize.width,
+                                          height: unitOfMeasureLabelSize.height)
       addSubview(unitOfMeasureLabel)
+        
+        let averageLabel = UILabel()
+        averageLabel.text = chartData.formattedAverage
+        averageLabel.font = config.averageView.primaryFont
+        averageLabel.textColor = config.averageView.primaryColor
+        let averageLabelSize = averageLabel.intrinsicContentSize
+        averageLabel.frame = CGRect(x: xPositionForAverageLabel(averageLabel),
+                                    y: averageLineY + spacingFromLine + config.averageView.lineWidth,
+                                    width: averageLabelSize.width,
+                                    height: averageLabelSize.height)
+        addSubview(averageLabel)
       
       let line = UIView()
       line.backgroundColor = config.averageView.lineColor
