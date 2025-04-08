@@ -27,17 +27,23 @@ public struct FLAverageViewConfig {
     /// The color of the unit of measure label.
     public var secondaryColor: UIColor
     
+    /// Average Title
+    public var avgTitle: String
+        
+    
     public init(lineWidth: CGFloat = 2,
                 primaryFont: UIFont = .preferredFont(for: .subheadline, weight: .semibold),
                 secondaryFont: UIFont = .preferredFont(for: .footnote, weight: .medium),
                 primaryColor: UIColor = FLColor.black,
                 secondaryColor: UIColor = FLColor.darkGray,
-                lineColor: UIColor = FLColor.darkGray) {
+                lineColor: UIColor = FLColor.darkGray,
+                avgTitle: String = "Average Time") {
         self.lineWidth = lineWidth
         self.primaryFont = primaryFont
         self.secondaryFont = secondaryFont
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
         self.lineColor = lineColor
+        self.avgTitle = avgTitle
     }
 }

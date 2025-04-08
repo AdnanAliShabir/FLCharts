@@ -374,7 +374,7 @@ public class FLCartesianPlane: UIView, FLStylable {
       
       
       let unitOfMeasureLabel = UILabel()
-        unitOfMeasureLabel.text = "\(Translation.averageAbbreviated) \(chartData.yAxisUnitOfMeasure)"
+        unitOfMeasureLabel.text = "\(config.averageView.avgTitle) \(chartData.yAxisUnitOfMeasure)"
       unitOfMeasureLabel.font = config.averageView.secondaryFont
       unitOfMeasureLabel.textColor = config.averageView.secondaryColor
       let unitOfMeasureLabelSize = unitOfMeasureLabel.intrinsicContentSize
