@@ -340,7 +340,7 @@ public class FLCartesianPlane: UIView, FLStylable {
     
     if step > 0 {
       for value in stride(from: dataMinValue, through: (dataMaxValue ?? chartDataMaxValue), by: step) {
-        //guard value > 0 else { continue }
+        guard value > 0 else { continue }
         
         let chartTickY = yPosition(forValue: value)
         let (text, size) = textSizeFrom(value: value, maxYLabelWidth: &maxYLabelWidth)
