@@ -44,7 +44,14 @@ public class FLChartData {
     }
     
     public var formattedAverage: String {
-        yAxisFormatter.string(from: NSNumber(value: average))
+        // Set <1m instead of 0m if avg less than 1 minute
+        let avg = average
+        if avg > 0 && avg < 1 {
+            return "<1m"
+        } else {
+            return yAxisFormatter.string(from: NSNumber(value: avg))
+        }
+        //yAxisFormatter.string(from: NSNumber(value: average))
     }
         
     internal var numberOfValues: Int {
