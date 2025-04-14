@@ -104,8 +104,15 @@ public class FLChartData {
             guard dataEntries.count >= 2 else {
                 return dataEntries.first?.total
             }
-            return dataEntries.max(by: { $0.total < $1.total })?.total
+            //return dataEntries.max(by: { $0.total < $1.total })?.total
             
+            // Set minimum value to 3 if all values are less than 3
+            let max = dataEntries.max(by: { $0.total < $1.total })?.total
+            if max ?? 0 < 3 {
+                return 3
+            } else {
+                return max
+            }
         case .line:
             guard dataEntries.count > 1 else {
                 return dataEntries.first?.total
